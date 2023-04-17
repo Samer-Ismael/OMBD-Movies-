@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.time.LocalDate;
-
 public class DatabaseHandler {
 
     Connection conn = null;

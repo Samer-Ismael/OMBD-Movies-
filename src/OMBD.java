@@ -1,5 +1,4 @@
 import org.json.JSONObject;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -171,7 +170,5 @@ public class OMBD {
             System.out.println("An error occurred while writing to the file.");
             System.out.println(e.getMessage());
         }
-
-
     }
 }
