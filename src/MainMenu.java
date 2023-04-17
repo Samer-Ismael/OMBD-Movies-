@@ -6,6 +6,7 @@ public class MainMenu {
         DatabaseHandler db = new DatabaseHandler();
         OMBD omdb1 = new OMBD();
 
+        db.deleteAllMovies();
 
         try {
             System.out.println("Enter a movie title: ");

@@ -27,18 +27,20 @@ public class DatabaseHandler {
     }
 
     void addMovieToDatabase(String title, String year, String rated, String released) {
+        LocalDate date = LocalDate.now();
+        int month = date.getMonthValue();
         try {
             PreparedStatement pStatement = conn.prepareStatement("INSERT INTO movies (title, year, rated, released, date) VALUES (?,?,?,?,?)");
             pStatement.setString(1, title);
             pStatement.setString(2, year);
             pStatement.setString(3, rated);
             pStatement.setString(4, released);
-            pStatement.setDate(5, Date.valueOf(LocalDate.now()));
+            pStatement.setInt(5, month);
 
             int result = pStatement.executeUpdate();
 
             if (result > 0) {
-                //deleteOldMovies(); // Delete old movies from database
+                deleteOldMovies(); // Delete old movies from database
                 System.out.println("Done!");
             }
         } catch (SQLException e) {
@@ -68,8 +70,11 @@ public class DatabaseHandler {
     }
 
     private void deleteOldMovies() {
+        LocalDate date = LocalDate.now();
+        int month = date.getMonthValue();
         try {
-            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies WHERE date < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies WHERE date > ?");
+            pStatement.setInt(1, month);
             int result = pStatement.executeUpdate();
 
             if (result > 0) {
