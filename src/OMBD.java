@@ -1,11 +1,10 @@
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class OMBD {
 
@@ -74,11 +73,31 @@ public class OMBD {
         try {
             FileInputStream input = new FileInputStream(userHome + "/Documents/APIKeys/OMDB.txt");
             props.load(input);
+            this.apiKey = props.getProperty("apiKey");
         } catch (Exception e) {
-            e.printStackTrace();
-            return;
+            System.out.println(e.getMessage());
+            getAPIFromUser();
         }
-        this.apiKey = props.getProperty("apiKey");
+    }
+
+    private void getAPIFromUser() {
+        try {
+            System.out.println("Do you have an API key? (y/n)");
+            Scanner scanner1 = new Scanner(System.in);
+            if (scanner1.nextLine().equalsIgnoreCase("y")) {
+                System.out.println("Enter your API key: ");
+                setApiKey(scanner1.nextLine());
+                createNewFileForAPI(getApiKey());
+            } else {
+                System.out.println("You can get an API key from http://www.omdbapi.com/");
+                System.out.println("Enter your API key: ");
+                setApiKey(scanner1.nextLine());
+            }
+        } catch (Exception e) {
+            System.out.println("Wrong input!");
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
 
     public void getData(String apiKey, String movieTitle) {
@@ -121,4 +140,38 @@ public class OMBD {
         System.out.println("Released: " + getReleased());
     }
 
+    private void createNewFileForAPI (String key) {
+        String userHome = System.getProperty("user.home");
+
+        String folderPath = userHome + "/Documents/APIKeys";
+        String fileName = "OMDB.txt";
+        String filePosition = folderPath + "/" + fileName;
+
+        String toWrite = "apiKey=" + key;
+
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        File file = new File(filePosition);
+        try {
+            file.createNewFile();
+            System.out.println("File created successfully!");
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the file.");
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(toWrite);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            System.out.println(e.getMessage());
+        }
+
+
+    }
 }

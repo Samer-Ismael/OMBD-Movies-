@@ -6,22 +6,6 @@ public class MainMenu {
         DatabaseHandler db = new DatabaseHandler();
         OMBD omdb1 = new OMBD();
 
-        try {
-            System.out.println("Do you have an API key? (y/n)");
-            Scanner scanner1 = new Scanner(System.in);
-            if (scanner1.nextLine().equalsIgnoreCase("y")) {
-                System.out.println("Enter your API key: ");
-                omdb1.setApiKey(scanner1.nextLine());
-            } else {
-                System.out.println("You can get an API key from http://www.omdbapi.com/");
-                System.out.println("Enter your API key: ");
-                omdb1.setApiKey(scanner1.nextLine());
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong input!");
-            System.out.println(e.getMessage());
-            System.exit(0);
-        }
 
         try {
             System.out.println("Enter a movie title: ");
