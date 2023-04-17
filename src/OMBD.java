@@ -1,7 +1,12 @@
-import java.util.*;
-import java.net.*;
-import java.io.*;
-import org.json.*;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Properties;
+
 public class OMBD {
 
     String apiKey;
@@ -16,42 +21,53 @@ public class OMBD {
         this.rated = rated;
         this.released = released;
     }
+
     public OMBD() {
 
         getAPIKey();
     }
+
     public String getApiKey() {
         return apiKey;
     }
+
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getYear() {
         return year;
     }
+
     public void setYear(String year) {
         this.year = year;
     }
+
     public String getRated() {
         return rated;
     }
+
     public void setRated(String rated) {
         this.rated = rated;
     }
+
     public String getReleased() {
         return released;
     }
+
     public void setReleased(String released) {
         this.released = released;
     }
 
-    private void getAPIKey () {
+    private void getAPIKey() {
         String userHome = System.getProperty("user.home");
 
         Properties props = new Properties();
@@ -62,10 +78,10 @@ public class OMBD {
             e.printStackTrace();
             return;
         }
-         this.apiKey = props.getProperty("apiKey");
+        this.apiKey = props.getProperty("apiKey");
     }
 
-    public void getData (String apiKey, String movieTitle) {
+    public void getData(String apiKey, String movieTitle) {
         String APIUrl = "http://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle;
         StringBuffer answer = null;
         try {
@@ -97,7 +113,8 @@ public class OMBD {
         this.rated = rated;
         this.released = released;
     }
-    public void printMovie () {
+
+    public void printMovie() {
         System.out.println("Title: " + getTitle());
         System.out.println("Year: " + getYear());
         System.out.println("Rated: " + getRated());

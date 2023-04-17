@@ -17,14 +17,7 @@ public class DatabaseHandler {
     }
 
     private void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS movies (\n"
-                + "id integer PRIMARY KEY,\n"
-                + "title varchar(50),\n"
-                + "year varchar(50),\n"
-                + "rated varchar(50),\n"
-                + "released varchar(50),\n"
-                + "date varchar(50)\n"
-                + ");";
+        String sql = "CREATE TABLE IF NOT EXISTS movies (\n" + "id integer PRIMARY KEY,\n" + "title varchar(50),\n" + "year varchar(50),\n" + "rated varchar(50),\n" + "released varchar(50),\n" + "date varchar(50)\n" + ");";
 
         try {
             conn.prepareStatement(sql).executeUpdate();
@@ -35,8 +28,7 @@ public class DatabaseHandler {
 
     void addMovieToDatabase(String title, String year, String rated, String released) {
         try {
-            PreparedStatement pStatement =
-                    conn.prepareStatement("INSERT INTO movies (title, year, rated, released, date) VALUES (?,?,?,?,?)");
+            PreparedStatement pStatement = conn.prepareStatement("INSERT INTO movies (title, year, rated, released, date) VALUES (?,?,?,?,?)");
             pStatement.setString(1, title);
             pStatement.setString(2, year);
             pStatement.setString(3, rated);
@@ -56,8 +48,7 @@ public class DatabaseHandler {
 
     boolean getMovieFromDatabase(String title) {
         try {
-            PreparedStatement pStatement =
-                    conn.prepareStatement("SELECT * FROM movies WHERE title = ?");
+            PreparedStatement pStatement = conn.prepareStatement("SELECT * FROM movies WHERE title = ?");
             pStatement.setString(1, title);
             ResultSet result = pStatement.executeQuery();
             if (result.next()) {
@@ -78,8 +69,7 @@ public class DatabaseHandler {
 
     private void deleteOldMovies() {
         try {
-            PreparedStatement pStatement =
-                    conn.prepareStatement("DELETE FROM movies WHERE date < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies WHERE date < DATE_SUB(NOW(), INTERVAL 7 DAY)");
             int result = pStatement.executeUpdate();
 
             if (result > 0) {
@@ -89,10 +79,10 @@ public class DatabaseHandler {
             System.out.println(e.getMessage());
         }
     }
+
     public void deleteAllMovies() {
         try {
-            PreparedStatement pStatement =
-                    conn.prepareStatement("DELETE FROM movies");
+            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies");
             int result = pStatement.executeUpdate();
 
             if (result > 0) {

@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class MainMenu {
     public MainMenu() {
 
@@ -7,7 +8,7 @@ public class MainMenu {
 
         System.out.println("Do you have an API key? (y/n)");
         Scanner scanner1 = new Scanner(System.in);
-        if (scanner1.nextLine().toLowerCase().equals("y")) {
+        if (scanner1.nextLine().equalsIgnoreCase("y")) {
             System.out.println("Enter your API key: ");
             omdb1.setApiKey(scanner1.nextLine());
         } else {
