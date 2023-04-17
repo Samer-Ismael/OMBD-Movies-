@@ -72,7 +72,7 @@ public class DatabaseHandler {
         LocalDate date = LocalDate.now();
         int month = date.getMonthValue();
         try {
-            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies WHERE date > ?");
+            PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies WHERE date < ?");
             pStatement.setInt(1, month);
             int result = pStatement.executeUpdate();
 
@@ -84,6 +84,7 @@ public class DatabaseHandler {
         }
     }
 
+    // For testing purposes and debugging!
     public void deleteAllMovies() {
         try {
             PreparedStatement pStatement = conn.prepareStatement("DELETE FROM movies");
