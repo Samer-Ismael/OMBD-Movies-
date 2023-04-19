@@ -47,7 +47,7 @@ public class DatabaseHandler {
         }
     }
 
-    boolean getMovieFromDatabase(String title) {
+    boolean getMovieByTitle(String title) {
         try {
             PreparedStatement pStatement = conn.prepareStatement("SELECT * FROM movies WHERE title = ?");
             pStatement.setString(1, title);
@@ -66,6 +66,31 @@ public class DatabaseHandler {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+    boolean getMovieByYear(String year){
+        try {
+            PreparedStatement pStatement = conn.prepareStatement("SELECT * FROM movies WHERE year = ?");
+            pStatement.setString(1, year);
+            ResultSet result = pStatement.executeQuery();
+            if (result.next()) {
+                System.out.println("Title: " + result.getString("title"));
+                System.out.println("Year: " + result.getString("year"));
+                System.out.println("Rated: " + result.getString("rated"));
+                System.out.println("Released: " + result.getString("released"));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    boolean getMovieByActor(String Actor){
+
+
+
+        return true;
     }
 
     private void deleteOldMovies() {
